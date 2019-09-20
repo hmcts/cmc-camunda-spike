@@ -1,0 +1,11 @@
+java:
+  image: 'hmctsprivate.azurecr.io/cmc-camunda-spike:latest'
+  applicationPort: 4401
+  environment:
+    REFORM_TEAM: cmc
+    REFORM_SERVICE_NAME: cmc-camunda
+  keyVaults:
+    cmc:
+      resourceGroup: cmc
+      secrets:
+      - cmc-s2s-secret
