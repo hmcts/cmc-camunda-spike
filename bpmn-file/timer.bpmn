@@ -1,191 +1,145 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://bpmn.io/schema/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:yaoqiang="http://bpmn.sourceforge.net" exporter="Camunda Modeler" exporterVersion="3.3.4" expressionLanguage="http://www.w3.org/1999/XPath" id="Definitions_0vh66rh" name="" targetNamespace="http://bpmn.io/schema/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
-  <bpmn:message id="Message_0xuhnp9" name="hmcts.cft.cmc.timer.TimerStarted"/>
-  <bpmn:message id="Message_06kpldo" name="hmcts.cft.cmc.timer.TimerCancelled"/>
-  <bpmn:process id="JudgmentProcess" isClosed="false" isExecutable="true" name="CMC Judgments" processType="None">
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0vh66rh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
+  <bpmn:process id="JudgmentProcess" name="CMC Judgments" isExecutable="true">
     <bpmn:extensionElements>
-      <camunda:executionListener event="start"/>
-      <yaoqiang:description/>
-      <camunda:executionListener event="start"/>
-      <yaoqiang:pageFormat height="841.8897637795276" imageableHeight="831.8897637795276" imageableWidth="588.1102362204724" imageableX="5.0" imageableY="5.0" orientation="0" width="598.1102362204724"/>
-      <yaoqiang:page background="#FFFFFF" horizontalCount="1" verticalCount="1"/>
+      <camunda:executionListener expression="" event="start" />
     </bpmn:extensionElements>
-    <bpmn:sequenceFlow id="SequenceFlow_17utt6x" sourceRef="TimerStarted_MessageEvent" targetRef="JudgementDelay"/>
-    <bpmn:intermediateCatchEvent id="JudgementDelay" name="Judgement delay" parallelMultiple="false">
+    <bpmn:sequenceFlow id="SequenceFlow_17utt6x" sourceRef="TimerStarted_MessageEvent" targetRef="JudgementDelay" />
+    <bpmn:intermediateCatchEvent id="JudgementDelay" name="Judgement delay">
       <bpmn:incoming>SequenceFlow_17utt6x</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ncs5yk</bpmn:outgoing>
-      <bpmn:outputSet/>
-      <bpmn:timerEventDefinition id="JudgementDelay_ED_1">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression"><![CDATA[PT30S]]></bpmn:timeDuration>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="TimerCompleted_EndEvent" name="Timer completed">
       <bpmn:incoming>SequenceFlow_1330v6w</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1pkyslo</bpmn:incoming>
-      <bpmn:inputSet/>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0ncs5yk" sourceRef="JudgementDelay" targetRef="HandleTimerExpiry_SystemTask"/>
-    <bpmn:sequenceFlow id="SequenceFlow_1ivtcc1" sourceRef="HandleTimerExpiry_SystemTask" targetRef="ExclusiveGateway_0a5upnj"/>
-    <bpmn:startEvent id="TimerStarted_MessageEvent" isInterrupting="true" name="Timer started" parallelMultiple="false">
+    <bpmn:sequenceFlow id="SequenceFlow_0ncs5yk" sourceRef="JudgementDelay" targetRef="HandleTimerExpiry_SystemTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ivtcc1" sourceRef="HandleTimerExpiry_SystemTask" targetRef="ExclusiveGateway_0a5upnj" />
+    <bpmn:startEvent id="TimerStarted_MessageEvent" name="Timer started">
       <bpmn:extensionElements>
         <camunda:formData businessKey="caseId">
-          <formData>
-            <camunda:formField id="caseId" label="Case ID" type="string"/>
-          </formData>
+          <camunda:formField id="caseId" label="Case ID" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_17utt6x</bpmn:outgoing>
-      <bpmn:outputSet/>
-      <bpmn:messageEventDefinition id="TimerStarted_MessageEvent_ED_1" messageRef="Message_0xuhnp9"/>
+      <bpmn:messageEventDefinition messageRef="Message_0xuhnp9" />
     </bpmn:startEvent>
-    <bpmn:subProcess completionQuantity="1" id="SubProcess_0txpvcx" isForCompensation="false" startQuantity="1" triggeredByEvent="true">
-      <bpmn:startEvent id="TimerCancelled_MessageEvent" isInterrupting="true" name="Timer cancelled" parallelMultiple="false">
+    <bpmn:subProcess id="SubProcess_0txpvcx" triggeredByEvent="true">
+      <bpmn:startEvent id="TimerCancelled_MessageEvent" name="Timer cancelled">
         <bpmn:outgoing>SequenceFlow_0empaev</bpmn:outgoing>
-        <bpmn:outputSet/>
-        <bpmn:messageEventDefinition id="TimerCancelled_MessageEvent_ED_1" messageRef="Message_06kpldo"/>
+        <bpmn:messageEventDefinition messageRef="Message_06kpldo" />
       </bpmn:startEvent>
       <bpmn:endEvent id="TimerAborted_EndEvent" name="Timer aborted">
         <bpmn:incoming>SequenceFlow_0empaev</bpmn:incoming>
-        <bpmn:inputSet/>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="SequenceFlow_0empaev" sourceRef="TimerCancelled_MessageEvent" targetRef="TimerAborted_EndEvent"/>
+      <bpmn:sequenceFlow id="SequenceFlow_0empaev" sourceRef="TimerCancelled_MessageEvent" targetRef="TimerAborted_EndEvent" />
     </bpmn:subProcess>
-    <bpmn:serviceTask camunda:topic="CMC_Judgment" camunda:type="external" completionQuantity="1" id="HandleTimerExpiry_SystemTask" implementation="##WebService" isForCompensation="false" name="Check paper response present" startQuantity="1">
+    <bpmn:serviceTask id="HandleTimerExpiry_SystemTask" name="Check paper response present" camunda:type="external" camunda:topic="CMC_Judgment">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <inputOutput>
-            <camunda:inputParameter name="caseId"/>
-            <camunda:outputParameter name="paperResponsePresent"/>
-          </inputOutput>
+          <camunda:inputParameter name="caseId" />
+          <camunda:outputParameter name="paperResponsePresent" />
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0ncs5yk</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ivtcc1</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:task completionQuantity="1" id="Task_11npsib" isForCompensation="false" name="Issue judgement" startQuantity="1">
+    <bpmn:task id="Task_11npsib" name="Issue judgement">
       <bpmn:incoming>SequenceFlow_0nhx2yb</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1330v6w</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_1330v6w" sourceRef="Task_11npsib" targetRef="TimerCompleted_EndEvent"/>
-    <bpmn:exclusiveGateway gatewayDirection="Unspecified" id="ExclusiveGateway_0a5upnj">
+    <bpmn:sequenceFlow id="SequenceFlow_1330v6w" sourceRef="Task_11npsib" targetRef="TimerCompleted_EndEvent" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0a5upnj">
       <bpmn:incoming>SequenceFlow_1ivtcc1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0nhx2yb</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1pkyslo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0nhx2yb" sourceRef="ExclusiveGateway_0a5upnj" targetRef="Task_11npsib">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[#{paperResponsePresent == 'true'}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{paperResponsePresent == 'true'}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1pkyslo" sourceRef="ExclusiveGateway_0a5upnj" targetRef="TimerCompleted_EndEvent"/>
+    <bpmn:sequenceFlow id="SequenceFlow_1pkyslo" sourceRef="ExclusiveGateway_0a5upnj" targetRef="TimerCompleted_EndEvent" />
   </bpmn:process>
-  <bpmndi:BPMNDiagram id="Yaoqiang_Diagram-JudgmentProcess" name="Untitled Diagram" resolution="96.0">
-    <bpmndi:BPMNPlane bpmnElement="JudgmentProcess">
-      <bpmndi:BPMNShape bpmnElement="JudgementDelay" id="Yaoqiang-JudgementDelay">
-        <dc:Bounds height="32.0" width="32.0" x="332.0" y="209.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="94.0" x="305.0" y="252.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="TimerCompleted_EndEvent" id="Yaoqiang-TimerCompleted_EndEvent">
-        <dc:Bounds height="32.0" width="32.0" x="1172.0" y="242.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="96.0" x="1142.0" y="285.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="TimerStarted_MessageEvent" id="Yaoqiang-TimerStarted_MessageEvent">
-        <dc:Bounds height="32.0" width="32.0" x="167.0" y="209.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="78.0" x="146.5" y="252.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="SubProcess_0txpvcx" id="Yaoqiang-SubProcess_0txpvcx" isExpanded="true">
-        <dc:Bounds height="120.0" width="241.0" x="220.0" y="370.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="235.0" y="375.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="HandleTimerExpiry_SystemTask" id="Yaoqiang-HandleTimerExpiry_SystemTask">
-        <dc:Bounds height="80.0" width="100.0" x="490.0" y="187.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="46.96" width="73.0" x="503.5" y="205.52"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Task_11npsib" id="Yaoqiang-Task_11npsib">
-        <dc:Bounds height="80.0" width="100.0" x="890.0" y="80.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="32.96" width="63.0" x="908.5" y="105.52"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_0a5upnj" id="Yaoqiang-ExclusiveGateway_0a5upnj" isMarkerVisible="true">
-        <dc:Bounds height="42.0" width="42.0" x="725.0" y="202.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="743.0" y="246.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="TimerCancelled_MessageEvent" id="Yaoqiang-TimerCancelled_MessageEvent">
-        <dc:Bounds height="32.0" width="32.0" x="263.0" y="403.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="90.0" x="236.0" y="446.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="TimerAborted_EndEvent" id="Yaoqiang-TimerAborted_EndEvent">
-        <dc:Bounds height="32.0" width="32.0" x="379.0" y="403.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="82.0" x="356.5" y="446.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1pkyslo" id="Yaoqiang-SequenceFlow_1pkyslo">
-        <di:waypoint x="750.0" y="240.1818181818183"/>
-        <di:waypoint x="750.0" y="260.0"/>
-        <di:waypoint x="1171.852017230004" y="260.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="948.02" y="250.52"/>
-        </bpmndi:BPMNLabel>
+  <bpmn:message id="Message_0xuhnp9" name="hmcts.cft.cmc.timer.TimerStarted" />
+  <bpmn:message id="Message_06kpldo" name="hmcts.cft.cmc.timer.TimerCancelled" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="JudgmentProcess">
+      <bpmndi:BPMNEdge id="SequenceFlow_17utt6x_di" bpmnElement="SequenceFlow_17utt6x">
+        <di:waypoint x="203" y="227" />
+        <di:waypoint x="332" y="227" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0nhx2yb" id="Yaoqiang-SequenceFlow_0nhx2yb">
-        <di:waypoint x="750.0" y="206.63636363636357"/>
-        <di:waypoint x="750.0" y="130.0"/>
-        <di:waypoint x="889.7727272727274" y="130.0"/>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0cpvanc_di" bpmnElement="JudgementDelay">
+        <dc:Bounds x="332" y="209" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="196.0" x="683.57" y="120.52"/>
+          <dc:Bounds x="310" y="252" width="84" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1jxkox7_di" bpmnElement="TimerCompleted_EndEvent">
+        <dc:Bounds x="1172" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1149" y="285" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ncs5yk_di" bpmnElement="SequenceFlow_0ncs5yk">
+        <di:waypoint x="368" y="227" />
+        <di:waypoint x="490" y="227" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1330v6w" id="Yaoqiang-SequenceFlow_1330v6w">
-        <di:waypoint x="989.7727272727274" y="120.0"/>
-        <di:waypoint x="1081.0" y="120.0"/>
-        <di:waypoint x="1081.0" y="260.0"/>
-        <di:waypoint x="1171.7779579831094" y="258.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="1078.0" y="179.3"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ivtcc1_di" bpmnElement="SequenceFlow_1ivtcc1">
+        <di:waypoint x="590" y="227" />
+        <di:waypoint x="725" y="227" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1ivtcc1" id="Yaoqiang-SequenceFlow_1ivtcc1">
-        <di:waypoint x="589.7727272727274" y="227.0"/>
-        <di:waypoint x="725.1818181818184" y="223.0"/>
+      <bpmndi:BPMNShape id="StartEvent_0ayduth_di" bpmnElement="TimerStarted_MessageEvent">
+        <dc:Bounds x="167" y="209" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="654.5" y="215.55"/>
+          <dc:Bounds x="153" y="252" width="65" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_022mqt8_di" bpmnElement="SubProcess_0txpvcx" isExpanded="true">
+        <dc:Bounds x="220" y="370" width="241" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1df30qm_di" bpmnElement="TimerCancelled_MessageEvent">
+        <dc:Bounds x="263" y="403" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="242" y="446" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_02d4zde_di" bpmnElement="TimerAborted_EndEvent">
+        <dc:Bounds x="379" y="403" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="363" y="446" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0empaev_di" bpmnElement="SequenceFlow_0empaev">
+        <di:waypoint x="299" y="421" />
+        <di:waypoint x="379" y="421" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0empaev" id="Yaoqiang-SequenceFlow_0empaev">
-        <di:waypoint x="294.7674965623451" y="419.0"/>
-        <di:waypoint x="378.7779579831096" y="419.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="333.77" y="409.52"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="ServiceTask_1ku6yj2_di" bpmnElement="HandleTimerExpiry_SystemTask">
+        <dc:Bounds x="490" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_11npsib_di" bpmnElement="Task_11npsib">
+        <dc:Bounds x="890" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1330v6w_di" bpmnElement="SequenceFlow_1330v6w">
+        <di:waypoint x="990" y="120" />
+        <di:waypoint x="1081" y="120" />
+        <di:waypoint x="1081" y="260" />
+        <di:waypoint x="1172" y="260" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_17utt6x" id="Yaoqiang-SequenceFlow_17utt6x">
-        <di:waypoint x="198.76749656234512" y="225.0"/>
-        <di:waypoint x="331.7779579831096" y="225.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="262.27" y="215.52"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0bjapem_di" bpmnElement="ExclusiveGateway_0a5upnj" isMarkerVisible="true">
+        <dc:Bounds x="725" y="202" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nhx2yb_di" bpmnElement="SequenceFlow_0nhx2yb">
+        <di:waypoint x="750" y="202" />
+        <di:waypoint x="750" y="130" />
+        <di:waypoint x="890" y="130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0ncs5yk" id="Yaoqiang-SequenceFlow_0ncs5yk">
-        <di:waypoint x="363.7674965623451" y="225.0"/>
-        <di:waypoint x="489.77272727272737" y="227.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="18.96" width="6.0" x="424.0" y="216.29"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNEdge id="SequenceFlow_1pkyslo_di" bpmnElement="SequenceFlow_1pkyslo">
+        <di:waypoint x="750" y="252" />
+        <di:waypoint x="750" y="260" />
+        <di:waypoint x="1172" y="260" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-</definitions>
+</bpmn:definitions>
