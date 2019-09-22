@@ -1,0 +1,6 @@
+dependencies:
+- name: camunda-bpm
+  repository: file:///Users/kariml/Development/camunda-bpm/charts/camunda-bpm
+  version: 0.0.1
+digest: sha256:3b30bacd70549763c97f8721fdfcd063a05bf7c8c75b7732b69c230df8813ee7
+generated: "2019-09-20T16:35:18.376362+01:00"
