@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-CHART="camunda-bpm"
-RELEASE="camunda-bpm-release"
+CHART="cmc-camunda-spike"
+RELEASE="cmc-camunda-spike-release"
 NAMESPACE="money-claims"
 
 helm install ${CHART} --name ${RELEASE} \
