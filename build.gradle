@@ -8,6 +8,14 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+/*bootJar {
+    archiveName = 'cmc-camunda-spike.jar'
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+    }
+}*/
+
 repositories {
     mavenLocal()
     mavenCentral()
