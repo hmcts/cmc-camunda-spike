@@ -16,12 +16,6 @@ bootJar {
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "Reform :: CMC :: CMC Camunda Spike"
-    }
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
