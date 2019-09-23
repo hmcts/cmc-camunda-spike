@@ -1,5 +1,4 @@
 dependencies:
-  - name: camunda-bpm
-    version: ~0.0.1
-    #repository: '@hmctsprivate'
-    repository: 'file:///Users/kariml/Development/camunda-bpm/charts/camunda-bpm'
+  - name: java
+    version: ~2.2.2
+    repository: '@hmctspublic'

@@ -1,6 +1,6 @@
 dependencies:
-- name: camunda-bpm
-  repository: file:///Users/kariml/Development/camunda-bpm/charts/camunda-bpm
-  version: 0.0.1
-digest: sha256:3b30bacd70549763c97f8721fdfcd063a05bf7c8c75b7732b69c230df8813ee7
-generated: "2019-09-20T16:35:18.376362+01:00"
+- name: java
+  repository: https://hmctspublic.azurecr.io/helm/v1/repo
+  version: 2.2.2
+digest: sha256:ce427ce6b75063f71a695230b260957f66318f9630a7ca1138b71287af73fdc6
+generated: "2019-09-23T17:46:32.841833+01:00"

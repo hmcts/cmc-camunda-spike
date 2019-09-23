@@ -1,9 +1,11 @@
-ingressHost: cmc-camunda-spike-release.service.core-compute-preview.internal
-ingressIP: "10.97.17.51"
-consulIP: "10.97.11.254"
-
-readinessDelay: 90
-livenessDelay: 90
+java:
+  applicationPort: 4401
+  environment:
+    CAMUNDA_ENGINE_URL: http://camunda-bpm-pr-8.service.core-compute-preview.internal
+  image: 'hmctsprivate.azurecr.io/cmc-camunda-spike:latest'
+  ingressHost: cmc-camunda-spike-release.service.core-compute-preview.internal
+  ingressIP: "10.97.17.51"
+  consulIP: "10.97.11.254"
 
 global:
   subscriptionId: "bf308a5c-0624-4334-8ff8-8dca9fd43783"

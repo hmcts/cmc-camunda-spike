@@ -4,11 +4,9 @@
 
 def type = "java"
 def product = "cmc"
-def app = "camunda"
+def component = "camunda-spike"
 
 def secrets = [
-        secret('camunda-enterprise-user', 'ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_USER'),
-        secret('camunda-enterprise-password', 'ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_PASSWORD'),
    ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -20,15 +18,7 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   ]
 }
 
-
-withPipeline(type, product, app) {
- after('checkout') {
-    withAzureKeyvault( azureKeyVaultSecrets: secrets,
-                       keyVaultURLOverride: 'https://rpe-prod.vault.azure.net') {
-        env.ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_USER = env.ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_USER
-        env.ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_PASSWORD = env.ORG_GRADLE_PROJECT_CAMUNDA_NEXUS_PASSWORD
-     }
-  }
+withPipeline(type, product, component) {
   enableDockerBuild()
   installCharts()
 }
