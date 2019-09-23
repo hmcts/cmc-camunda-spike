@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 
 public class ProcessCreateTask {
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
 
         String baseUrl = "http://localhost:8999/rest/process-definition/key/d217a915-dae6-11e9-ba33-0242ac130003/start";
         String baseUrlTenant = "http://localhost:8999/rest/process-definition/key/JudgmentProcess/tenant-id/cmc/start";
@@ -24,5 +24,5 @@ public class ProcessCreateTask {
         }catch (Exception gene){
             gene.printStackTrace();
         }
-    }
+    }*/
 }
