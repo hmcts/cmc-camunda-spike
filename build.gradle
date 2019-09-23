@@ -48,3 +48,11 @@ task functional(type: Test, group: 'Verification') {
 task smoke(type: Test, group: 'Verification') {
     description = "Runs Smoke Tests"
 }
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Reform :: CMC Camunda Spike"
+        property "sonar.projectKey", "com.cmc.camunda"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
+    }
+}
