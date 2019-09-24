@@ -2,7 +2,7 @@ java:
   applicationPort: 4401
   environment:
     CAMUNDA_ENGINE_URL: http://camunda-bpm-pr-8.service.core-compute-preview.internal
-  image: 'hmctsprivate.azurecr.io/cmc-camunda-spike:latest'
+  image: 'hmctspublic.azurecr.io/cmc/camunda-spike:latest'
   ingressHost: cmc-camunda-spike-release.service.core-compute-preview.internal
   ingressIP: "10.97.17.51"
   consulIP: "10.97.11.254"

@@ -1,4 +1,4 @@
 java:
-  image: 'hmctsprivate.azurecr.io/cmc-camunda-spike:latest'
+  image: 'hmctspublic.azurecr.io/cmc/camunda-spike:latest'
   applicationPort: 4401
 
