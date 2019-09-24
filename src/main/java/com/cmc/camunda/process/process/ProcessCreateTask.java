@@ -1,28 +1,36 @@
 package com.cmc.camunda.process.process;
 
-import com.google.gson.Gson;
+import com.cmc.camunda.model.StartResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 
+@Component
 public class ProcessCreateTask {
-/*    public static void main(String[] args) {
 
-        String baseUrl = "http://localhost:8999/rest/process-definition/key/d217a915-dae6-11e9-ba33-0242ac130003/start";
-        String baseUrlTenant = "http://localhost:8999/rest/process-definition/key/JudgmentProcess/tenant-id/cmc/start";
-        String processKey = "JudgmentProcess";
-        RestTemplate restTemplate = new RestTemplate();
+    private final String processStartUrl;
+    private final RestTemplate restTemplate;
+    private final String processKey = "JudgmentProcess";
 
+    @Autowired
+    public ProcessCreateTask(@Value("${camunda.base.url}") String baseUrl,
+                             @Value("${camunda.tenant}") String tenantId, RestTemplateBuilder restTemplateBuilder){
+        this.restTemplate = restTemplateBuilder.build();
+        this.processStartUrl = baseUrl + "/process-definition/key/" + processKey + "/tenant-id/" + tenantId + "/start";
+    }
+
+    public String createProcess(String caseId) {
+
+        String messageKey = "JUDGMENT-PROCESS-" + caseId;
         HashMap<String, ProcessVariable> variable = new HashMap<>();
-        variable.put("caseId", new ProcessVariable("caseID401", "String"));
+        variable.put("caseId", new ProcessVariable(caseId, "String"));
 
-        CreateMessage createMessage = new CreateMessage("process201", "businessKey", variable );
-        Gson gson = new Gson();
-        System.out.println(gson.toJson(createMessage));
-        try {
-            restTemplate.postForObject(baseUrlTenant, createMessage, Object.class);
-        }catch (Exception gene){
-            gene.printStackTrace();
-        }
-    }*/
+        CreateMessage createMessage = new CreateMessage("process201", messageKey, variable );
+        StartResponse response = restTemplate.postForObject(processStartUrl, createMessage, StartResponse.class);
+        return response.getId();
+    }
 }
