@@ -1,0 +1,24 @@
+#!groovy
+
+@Library("Infrastructure")
+
+def type = "java"
+def product = "cmc"
+def component = "camunda-spike"
+
+def secrets = [
+   ]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+  [
+    secretType: 'Secret',
+    name: secretName,
+    version: '',
+    envVariable: envVar
+  ]
+}
+
+withPipeline(type, product, component) {
+  enableDockerBuild()
+  installCharts()
+}

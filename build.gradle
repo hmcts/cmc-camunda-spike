@@ -9,6 +9,14 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+bootJar {
+    archiveName = 'cmc-camunda-spike.jar'
+    manifest {
+        attributes 'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -35,4 +43,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+task functional(type: Test, group: 'Verification') {
+    description = "Runs Functional Tests"
+}
+
+task smoke(type: Test, group: 'Verification') {
+    description = "Runs Smoke Tests"
 }
